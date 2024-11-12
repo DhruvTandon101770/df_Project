@@ -1,0 +1,65 @@
+
+<html>
+<head>
+  <title>Menu 3 - Appointments</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="videoContainer">
+    <video autoplay muted loop id="videoBG" speed="3.0">
+        <source src="img/doctor3.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="overlay"></div>
+</div>
+  <header>
+    <nav>
+      <ul class="nav-list">
+        <li><a href="/">Home</a></li>
+        <li><a href="/menu1">Patients</a></li>
+        <li><a href="/menu2">Doctors</a></li>
+        <li><a href="/menu3" class="vogue">Appointments</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h2>Appointments</h2>
+    <table>
+      <tr>
+        <th>Appointment ID</th>
+        <th>Doctor ID</th>
+        <th>Patient ID</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Actions</th>
+      </tr>
+      <% appointments.forEach(appointment => { %>
+        <tr>
+          <td><%= appointment.AppointmentID %></td>
+          <td><%= appointment.DoctorID %></td>
+          <td><%= appointment.PatientID %></td>
+          <td><%= appointment.Date %></td>
+          <td><%= appointment.Time %></td>
+          <td>
+            <button onclick="updateAppointment('<%= appointment.AppointmentID %>', '<%= appointment.DoctorID %>', '<%= appointment.PatientID %>', '<%= appointment.Date %>', '<%= appointment.Time %>')">Update</button>
+            <button onclick="deleteAppointment('<%= appointment.AppointmentID %>')">Delete</button>
+          </td>
+        </tr>
+      <% }); %>
+    </table>
+    <h2>Add Appointment</h2>
+    <form onsubmit="insertAppointment(event)">
+      <label for="doctorID">Doctor ID:</label>
+      <input type="text" id="doctorID" name="doctorID" required>
+      <label for="patientID">Patient ID:</label>
+      <input type="text" id="patientID" name="patientID" required>
+      <label for="date">Date:</label>
+      <input type="text" id="date" name="date" required>
+      <label for="time">Time:</label>
+      <input type="text" id="time" name="time" required>
+      <button type="submit">Add</button>
+    </form>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

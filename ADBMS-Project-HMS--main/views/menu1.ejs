@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Menu 1 - Patients</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="videoContainer">
+    <video autoplay muted loop id="videoBG" speed="3.0">
+      <source src="/img/doctor.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="overlay"></div>
+  </div>
+  
+  <header>
+    <nav>
+      <ul class="nav-list">
+        <li><a href="/">Home</a></li>
+        <li><a href="/menu1">Patients</a></li>
+        <li><a href="/menu2">Doctors</a></li>
+        <li><a href="/menu3" class="vogue">Appointments</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <main>
+    <h2>Patients</h2>
+    <table>
+      <tr>
+        <th>Patient ID</th>
+        <th>Name</th>
+        <th>Contact</th>
+        <th>Actions</th>
+      </tr>
+      <% patients.forEach(patient => { %>
+        <tr>
+          <td><%= patient.PatientID %></td>
+          <td><%= patient.Name %></td>
+          <td><%= patient.Contact %></td>
+          <td>
+            <button onclick="showUpdatePatientForm('<%= patient.PatientID %>', '<%= patient.Name %>', '<%= patient.Contact %>')">Update</button>
+            <button onclick="deletePatient('<%= patient.PatientID %>')">Delete</button>
+          </td>
+        </tr>
+      <% }); %>
+    </table>
+    
+    <h2>Add Patient</h2>
+    <form onsubmit="insertPatient(event)">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+      <label for="contact">Contact:</label>
+      <input type="text" id="contact" name="contact" required>
+      <button type="submit">Add</button>
+    </form>
+    
+    <div id="update-patient-form" style="display: none;">
+      <h2>Update Patient</h2>
+      <form onsubmit="updatePatient(event)">
+        <label for="update-patient-id">Patient ID:</label>
+        <input type="text" id="update-patient-id" name="patientID" readonly>
+        <label for="update-name">Name:</label>
+        <input type="text" id="update-name" name="name" required>
+        <label for="update-contact">Contact:</label>
+        <input type="text" id="update-contact" name="contact" required>
+        <button type="submit">Update</button>
+      </form>
+    </div>
+  </main>
+  
+  <script src="/script.js"></script>
+</body>
+</html>

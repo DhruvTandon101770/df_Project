@@ -1,0 +1,26 @@
+{
+  "name": "adbms-final-proj",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "mongodb": "^6.5.0",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "node": "^18.20.2",
+    "nodemon": "^3.1.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
+  "description": "The SQL script defines the structure of a relational database for a healthcare management system. It includes tables to store information about physicians, departments, medical procedures, patients, nurses, appointments, medications, rooms, and blocks within a healthcare facility."
+}
