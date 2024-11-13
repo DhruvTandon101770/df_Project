@@ -79,6 +79,16 @@ app.get('/signup', (req, res) => {
   res.render('signup', { error: null });
 });
 
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.log('Error destroying session:', err);
+      return res.status(500).send('Could not log out.');
+    }
+    res.redirect('/login'); // Redirect to login page after logout
+  });
+});
+
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   connection.query('SELECT * FROM User WHERE Username = ?', [username], async (err, results) => {
