@@ -3,72 +3,124 @@
 <head>
   <title>Menu 1 - Patients</title>
   <link rel="stylesheet" href="/css/style.css">
+  <script src="/scripts.js"></script>
 </head>
 <body>
   <div id="videoContainer">
-    <video autoplay muted loop id="videoBG" speed="3.0">
+    <video autoplay muted loop id="videoBG" playbackRate="3.0">
       <source src="/img/doctor.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
-    <div class="overlay"></div>
+    <div class="overlay" id="videoOverlay"></div>
   </div>
   
   <header>
-    <nav>
-      <ul class="nav-list">
-        <li><a href="/">Home</a></li>
-        <li><a href="/menu1">Patients</a></li>
-        <li><a href="/menu2">Doctors</a></li>
-        <li><a href="/menu3" class="vogue">Appointments</a></li>
+    <nav id="mainNav">
+      <ul class="nav-list" id="navList">
+        <li><a href="/" id="homeLink" onclick="handleNavigation(event)">Home</a></li>
+        <li><a href="/menu1" id="patientsLink" onclick="handleNavigation(event)">Patients</a></li>
+        <li><a href="/menu2" id="doctorsLink" onclick="handleNavigation(event)">Doctors</a></li>
+        <li><a href="/menu3" id="appointmentsLink" class="vogue" onclick="handleNavigation(event)">Appointments</a></li>
       </ul>
     </nav>
   </header>
   
-  <main>
-    <h2>Patients</h2>
-    <table>
-      <tr>
-        <th>Patient ID</th>
-        <th>Name</th>
-        <th>Contact</th>
-        <th>Actions</th>
-      </tr>
-      <% patients.forEach(patient => { %>
-        <tr>
-          <td><%= patient.PatientID %></td>
-          <td><%= patient.Name %></td>
-          <td><%= patient.Contact %></td>
-          <td>
-            <button onclick="showUpdatePatientForm('<%= patient.PatientID %>', '<%= patient.Name %>', '<%= patient.Contact %>')">Update</button>
-            <button onclick="deletePatient('<%= patient.PatientID %>')">Delete</button>
-          </td>
-        </tr>
-      <% }); %>
-    </table>
+  <main id="mainContent">
+    <section id="patientsListSection">
+      <h2>Patients List</h2>
+      <table id="patientsTable">
+        <thead>
+          <tr>
+            <th>Patient ID</th>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="patientsTableBody">
+          <% patients.forEach(patient => { %>
+            <tr id="patient-row-<%= patient.PatientID %>">
+              <td><%= patient.PatientID %></td>
+              <td><%= patient.Name %></td>
+              <td><%= patient.Contact %></td>
+              <td class="action-buttons">
+                <button 
+                  onclick="showUpdatePatientForm('<%= patient.PatientID %>', '<%= patient.Name %>', '<%= patient.Contact %>')"
+                  class="update-btn"
+                  id="update-btn-<%= patient.PatientID %>"
+                >
+                  Update
+                </button>
+                <button 
+                  onclick="confirmDeletePatient('<%= patient.PatientID %>')"
+                  class="delete-btn"
+                  id="delete-btn-<%= patient.PatientID %>"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </section>
     
-    <h2>Add Patient</h2>
-    <form onsubmit="insertPatient(event)">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required>
-      <label for="contact">Contact:</label>
-      <input type="text" id="contact" name="contact" required>
-      <button type="submit">Add</button>
-    </form>
-    
-    <div id="update-patient-form" style="display: none;">
-      <h2>Update Patient</h2>
-      <form onsubmit="updatePatient(event)">
-        <label for="update-patient-id">Patient ID:</label>
-        <input type="text" id="update-patient-id" name="patientID" readonly>
-        <label for="update-name">Name:</label>
-        <input type="text" id="update-name" name="name" required>
-        <label for="update-contact">Contact:</label>
-        <input type="text" id="update-contact" name="contact" required>
-        <button type="submit">Update</button>
+    <section id="addPatientSection">
+      <h2>Add New Patient</h2>
+      <form id="addPatientForm" onsubmit="insertPatient(event)" class="patient-form">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="contact">Contact:</label>
+          <input type="text" id="contact" name="contact" required pattern="[0-9]{10}" title="Please enter a valid 10-digit contact number">
+        </div>
+        <button type="submit" id="addPatientBtn">Add Patient</button>
       </form>
-    </div>
+    </section>
+    
+    <section id="updatePatientSection" style="display: none;">
+      <h2>Update Patient Information</h2>
+      <form id="updatePatientForm" onsubmit="updatePatient(event)" class="patient-form">
+        <div class="form-group">
+          <label for="update-patient-id">Patient ID:</label>
+          <input type="text" id="update-patient-id" name="patientID" readonly>
+        </div>
+        <div class="form-group">
+          <label for="update-name">Name:</label>
+          <input type="text" id="update-name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="update-contact">Contact:</label>
+          <input type="text" id="update-contact" name="contact" required pattern="[0-9]{10}" title="Please enter a valid 10-digit contact number">
+        </div>
+        <div class="form-buttons">
+          <button type="submit" id="updatePatientBtn">Update Patient</button>
+          <button type="button" id="cancelUpdateBtn" onclick="hideUpdatePatientForm()">Cancel</button>
+        </div>
+      </form>
+    </section>
   </main>
-  
-  <script src="/script.js"></script>
+
+  <!-- Confirmation Modal -->
+  <div id="confirmationModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h3>Confirm Delete</h3>
+      <p>Are you sure you want to delete this patient?</p>
+      <div class="modal-buttons">
+        <button onclick="proceedWithDelete()" class="confirm-btn">Yes, Delete</button>
+        <button onclick="cancelDelete()" class="cancel-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      initializePatientPage();
+    });
+  </script>
+
+  <script src="/scripts.js"></script>
 </body>
 </html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login - Hospital Management System</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/scripts.js"></script>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <% if (locals.error) { %>
+      <div class="error" id="errorMessage"><%= error %></div>
+    <% } %>
+    <form action="/login" method="POST" id="loginForm" onsubmit="handleLogin(event)">
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+      </div>
+      <button type="submit" id="loginButton">Login</button>
+    </form>
+    <p>Don't have an account? <a href="/signup" id="signupLink">Sign up</a></p>
+  </div>
+</body>
+</html>

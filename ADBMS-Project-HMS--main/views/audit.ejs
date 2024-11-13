@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audit Logs</title>
+  <link rel="stylesheet" href="/css/style1.css">
+</head>
+<body>
+  <header>
+    <h1>Audit Logs</h1>
+  </header>
+
+  <main>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>UserID</th>
+          <th>Action</th>
+          <th>TableName</th>
+          <th>RecordID</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% auditLogs.forEach(log => { %>
+          <tr>
+            <td><%= log.Timestamp %></td>
+            <td><%= log.UserID %></td>
+            <td><%= log.Action %></td>
+            <td><%= log.TableName %></td>
+            <td><%= log.RecordID %></td>
+            <td><%= log.Details %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </main>
+
+  <footer>
+    <a href="/">Back to Dashboard</a>
+  </footer>
+</body>
+</html>

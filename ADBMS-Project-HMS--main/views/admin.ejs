@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard - Hospital Management System</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="admin-container">
+    <h2>Admin Dashboard</h2>
+    
+    <div class="stats-container">
+      <h3>System Statistics</h3>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <h4>Patients</h4>
+          <p><%= stats.patientCount %></p>
+        </div>
+        <div class="stat-box">
+          <h4>Doctors</h4>
+          <p><%= stats.doctorCount %></p>
+        </div>
+        <div class="stat-box">
+          <h4>Appointments</h4>
+          <p><%= stats.appointmentCount %></p>
+        </div>
+        <div class="stat-box">
+          <h4>Users</h4>
+          <p><%= stats.userCount %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="users-container">
+      <h3>System Users</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Created At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% users.forEach(user => { %>
+            <tr>
+              <td><%= user.UserID %></td>
+              <td><%= user.Username %></td>
+              <td><%= user.Role %></td>
+              <td><%= moment(user.CreatedAt).format('YYYY-MM-DD HH:mm:ss') %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="audit-container">
+      <h3>Audit Logs</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>User</th>
+            <th>Action</th>
+            <th>Table</th>
+            <th>Record ID</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% auditLogs.forEach(log => { %>
+            <tr>
+              <td><%= moment(log.Timestamp).format('YYYY-MM-DD HH:mm:ss') %></td>
+              <td><%= log.Username %></td>
+              <td><%= log.Action %></td>
+              <td><%= log.TableName %></td>
+              <td><%= log.RecordID %></td>
+              <td><%= log.Details %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
