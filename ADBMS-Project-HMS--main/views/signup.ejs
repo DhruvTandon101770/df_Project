@@ -1,18 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Signup</title>
+  <title>Sign Up - Hospital Management System</title>
+  <link rel="stylesheet" href="/css/signup.css">
+  <script src="/scripts.js"></script>
 </head>
 <body>
-    <h1>Signup</h1>
-    <form action="/signup" method="POST">
+  <div class="signup-container">
+    <h2>Sign Up</h2>
+    <% if (locals.error) { %>
+      <div class="error" id="errorMessage"><%= error %></div>
+    <% } %>
+    <form action="/signup" method="POST" id="signupForm">
+      <div>
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-
+        <input type="text" name="username" id="username" required>
+      </div>
+      <div>
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
-
-        <button type="submit">Register</button>
+        <input type="password" name="password" id="password" required>
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required>
+      </div>
+      <button type="submit" id="signupButton">Sign Up</button>
     </form>
+    <p>Already have an account? <a href="/login" id="loginLink">Log in</a></p>
+  </div>
 </body>
 </html>
