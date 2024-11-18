@@ -257,20 +257,33 @@ button:hover {
 .nav-list li:last-child {
   margin-left: auto;
 }
+/* Container for logout button, positioned in the top right */
+.logout-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
 
 /* Logout button styling */
 .logout-btn {
+  display: all; /* Initially invisible */
   font-size: small;
-  color: white;
-  background-color: red;
-  padding: 8px 8px;
-  border-radius: 5px;
+  color: transparent; /* Text initially transparent */
+  background-color: transparent; /* No background */
+  padding: 0; /* Remove padding */
   text-decoration: none;
   font-weight: bold;
-  transition: background-color 0.3s;
+  transition: color 0.3s; /* Transition for text color */
+  border: none; /* Remove border */
 }
 
+/* Show logout button on hover over the container */
+.logout-container:hover .logout-btn {
+  display: inline; /* Display text on hover */
+  color: red; /* Change text color on hover */
+}
+
+/* Hover effect on the text color of the logout button */
 .logout-btn:hover {
-  background-color: darkred;
+  color: darkred;
 }
-
